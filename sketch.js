@@ -1,6 +1,8 @@
 var p;
 var e = [];
 var drops;
+var enemyLeft;
+var boss;
 
 function setup() {
     createCanvas (600, 600);
@@ -9,6 +11,8 @@ function setup() {
     for(var i = 0; i < 8; i++){
         e[i] = new Enemy(i*40 + 40, 40);
     }
+    enemyLeft = e.length;
+    boss = new Boss();
 
 }
 
@@ -27,7 +31,10 @@ function draw() {
     }
     endGame();
     checkDropHitEnemy();
-    
+    textSize(12);
+    fill(255);
+    text("Enemy Left:" +enemyLeft, 510, 585);
+    winGame();   
 }
 
 function Player() {
@@ -35,6 +42,7 @@ function Player() {
         this.y = 550;
         this.w = 50;
         this.h = 20;
+        this.playerHit = false;
         
         this.drawPlayer = function(){
             fill(255);
@@ -51,7 +59,7 @@ function Enemy(x, y){
     this.x = x;
     this.y = y;
     this.r = 30;
-    this.speedX = 6;
+    this.speedX = 5;
     this.beenHit = false;
     
     this.drawEnemy = function(){
@@ -98,7 +106,7 @@ function Enemy(x, y){
 function Drop(){
     this.x = p.x + p.w/2;
     this.y = p.y;
-    this.r = 20;
+    this.r = 40;
     this.fired = false;
 
     this.drawDrop = function(){
@@ -127,9 +135,35 @@ function mousePressed(){
 
 function checkDropHitEnemy(){
     for(var i = 0; i < e.length; i++){
-        if(drops.x - drops.r/2 > e[i].x - e[i].r && drops.x + drops.r/2 < e[i].x + e[i].r && drops.y - drops.r/2 > e[i].y - e[i].r && drops.y + drops.r/2 < e[i].y + e[i].r){
+        if(p.playerHit == false){
+        if(e[i].beenHit == false){
+        if(drops.x > e[i].x - e[i].r/2 && drops.x < e[i].x + e[i].r/2 && drops.y > e[i].y - e[i].r/2 && drops.y < e[i].y + e[i].r/2){
             e[i].beenHit = true;
             drops.fired = false;
+            enemyLeft--;
         }
     }
+}
+}
+}
+
+function winGame(){
+    if(enemyLeft == 0){
+    background(0, 255, 0);
+    p.x = 255;
+    fill(255);
+    noStroke();
+    textSize(32);
+    text("You've Won, Bitch!", 180, 250);
+}
+}
+
+function Boss(){
+    this.x = 275;
+    this.y = 0;
+    this.w = 50;
+    this.h = 20;
+    this.wx = this.x + this.w/2;
+    this.wy = this.y + this.h;
+    this.wr = 10;
 }
