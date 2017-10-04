@@ -8,12 +8,11 @@ function setup() {
     createCanvas (600, 600);
     p = new Player();
     drops = new Drop;
-    for(var i = 0; i < 8; i++){
+    for(var i = 0; i < 15; i++){
         e[i] = new Enemy(i*40 + 40, 40);
     }
     enemyLeft = e.length;
     boss = new Boss();
-
 }
 
 window.setup = setup;
@@ -24,7 +23,10 @@ function draw() {
     p.movePlayer();
     drops.drawDrop();
     drops.fireDrop();
-    for(var i = 0; i < 8; i++) {
+    boss.drawBoss();
+    boss.moveBoss();
+    boss.fireWeapon();
+    for(var i = 0; i < 15; i++) {
         e[i].moveEnemy();
         e[i].drawEnemy();
         e[i].playerHit();
@@ -33,7 +35,7 @@ function draw() {
     checkDropHitEnemy();
     textSize(12);
     fill(255);
-    text("Enemy Left:" +enemyLeft, 510, 585);
+    text("Enemy Left: " +enemyLeft, 510, 585);
     winGame();   
 }
 
@@ -45,7 +47,7 @@ function Player() {
         this.playerHit = false;
         
         this.drawPlayer = function(){
-            fill(255);
+            fill(0, 0, 255);
             noStroke();
             rect(this.x, this.y, this.w, this.h);
         }
@@ -64,7 +66,7 @@ function Enemy(x, y){
     
     this.drawEnemy = function(){
         if(this.beenHit == false){
-        fill(255, 0, 0);
+        fill(0, 255, 0);
         noStroke();
         ellipse(this.x, this.y, this.r, this.r);
     } // end drawEnemy
@@ -106,12 +108,12 @@ function Enemy(x, y){
 function Drop(){
     this.x = p.x + p.w/2;
     this.y = p.y;
-    this.r = 40;
+    this.r = 15;
     this.fired = false;
 
     this.drawDrop = function(){
         this.x = p.x + p.w/2;
-        fill(0, 0, 255);
+        fill(255, 255, 0);
         noStroke();
         ellipse(this.x, this.y, this.r, this.r);
     }
@@ -163,7 +165,39 @@ function Boss(){
     this.y = 0;
     this.w = 50;
     this.h = 20;
-    this.wx = this.x + this.w/2;
-    this.wy = this.y + this.h;
-    this.wr = 10;
+    this.wX = this.x + this.w/2;
+    this.wY = this.y + this.h;
+    this.wR = 15;
+    this.wSpeed = 10;
+    
+    this.drawBoss = function(){
+        fill(255, 0, 0);
+        noStroke();
+        rect(this.x, this.y, this.w, this.h);
+        ellipse(this.wX, this.wY, this.wR, this.wR);
+    }
+    
+    this.moveBoss = function(){
+        if(this.x + this.w/2 < p.x + p.w/2){
+            this.x += 3;
+        }
+        if(this.x + this.w/2 > p.x + p.w/2){
+            this.x -= 3;
+    }
+        this.wX = this.x + this.w/2;
+
+    this.fireWeapon = function(){
+        this.wY += 6;
+        if(this.wY > height){
+            this.wY = this.y;
+        }
+    }
+        
+        if(this.wX > p.x && this.wX < p.x + p.w && this.wY > p.y && this.wY < p.y + p.h){
+            p.playerHit = true;
+            this.wSpeed = 0;
+        }
+    }
+    
 }
+
