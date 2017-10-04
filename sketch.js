@@ -8,7 +8,7 @@ function setup() {
     createCanvas (600, 600);
     p = new Player();
     drops = new Drop;
-    for(var i = 0; i < 13; i++){
+    for(var i = 0; i < 10; i++){
         e[i] = new Enemy(i*40 + 40, 40);
     }
     enemyLeft = e.length;
@@ -26,7 +26,7 @@ function draw() {
     boss.drawBoss();
     boss.moveBoss();
     boss.fireWeapon();
-    for(var i = 0; i < 13; i++) {
+    for(var i = 0; i < 10; i++) {
         e[i].moveEnemy();
         e[i].drawEnemy();
         e[i].playerHit();
@@ -61,7 +61,7 @@ function Enemy(x, y){
     this.x = x;
     this.y = y;
     this.r = 30;
-    this.speedX = 3;
+    this.speedX = 5;
     this.beenHit = false;
     
     this.drawEnemy = function(){
@@ -168,7 +168,7 @@ function Boss(){
     this.wX = this.x + this.w/2;
     this.wY = this.y + this.h;
     this.wR = 15;
-    this.wSpeed = 10;
+    this.wSpeed = 5;
     
     this.drawBoss = function(){
         fill(255, 0, 0);
@@ -187,7 +187,7 @@ function Boss(){
         this.wX = this.x + this.w/2;
 
     this.fireWeapon = function(){
-        this.wY += 7;
+        this.wY += 10;
         if(this.wY > height){
             this.wY = this.y;
         }
