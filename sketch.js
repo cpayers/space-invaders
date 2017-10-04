@@ -61,7 +61,7 @@ function Enemy(x, y){
     this.x = x;
     this.y = y;
     this.r = 30;
-    this.speedX = 5;
+    this.speedX = 3;
     this.beenHit = false;
     
     this.drawEnemy = function(){
