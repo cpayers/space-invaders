@@ -179,10 +179,10 @@ function Boss(){
     
     this.moveBoss = function(){
         if(this.x + this.w/2 < p.x + p.w/2){
-            this.x += 4;
+            this.x += 3;
         }
         if(this.x + this.w/2 > p.x + p.w/2){
-            this.x -= 4;
+            this.x -= 3;
     }
         this.wX = this.x + this.w/2;
 
