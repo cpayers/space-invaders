@@ -8,7 +8,7 @@ function setup() {
     createCanvas (600, 600);
     p = new Player();
     drops = new Drop;
-    for(var i = 0; i < 8; i++){
+    for(var i = 0; i < 18; i++){
         e[i] = new Enemy(i*40 + 40, 40);
     }
     enemyLeft = e.length;
@@ -26,7 +26,7 @@ function draw() {
     boss.drawBoss();
     boss.moveBoss();
     boss.fireWeapon();
-    for(var i = 0; i < 8; i++) {
+    for(var i = 0; i < 18; i++) {
         e[i].moveEnemy();
         e[i].drawEnemy();
         e[i].playerHit();
@@ -100,7 +100,7 @@ function Enemy(x, y){
            fill(255);
            noStroke();
            textSize(32);
-           text("GAME OVER MAN", 170, 250);
+           text("GAME OVER MAN", 175, 250);
            
        }
    }
@@ -179,15 +179,15 @@ function Boss(){
     
     this.moveBoss = function(){
         if(this.x + this.w/2 < p.x + p.w/2){
-            this.x += 3;
+            this.x += 4;
         }
         if(this.x + this.w/2 > p.x + p.w/2){
-            this.x -= 3;
+            this.x -= 4;
     }
         this.wX = this.x + this.w/2;
 
     this.fireWeapon = function(){
-        this.wY += 6;
+        this.wY += 7;
         if(this.wY > height){
             this.wY = this.y;
         }
